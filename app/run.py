@@ -6,11 +6,9 @@ app = Flask(__name__)
 # Ruta principal
 @app.route('/')
 def index():
-    # Obtener preferencias de las cookies
     font = request.cookies.get('font', 'Arial')
     color = request.cookies.get('color', '#000000')
     
-    # Obtener enlaces visitados de las cookies
     visited_links = request.cookies.get('visited_links', '')
     visited_links = visited_links.split(',') if visited_links else []
     
@@ -36,6 +34,10 @@ def set_preferences():
     print(f"Setting cookies: Font={font}, Color={color}, Max Age={max_age} seconds")
 
     return resp
+@app.route('/get_all_cookies')
+def get_all_cookies():
+    cookies = request.cookies
+    return f"Cookies almacenadas por Flask: {cookies}"
 
 # Ruta para manejar los enlaces
 @app.route('/visit/<link_name>')
